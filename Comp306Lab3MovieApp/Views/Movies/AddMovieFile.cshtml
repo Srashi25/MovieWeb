@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "MovieWeb | Upload Movie";
+    Layout = "_MovieLayout";
+}
+
+<div class="col-5 container-style-movie center">
+    <div class="col-12  top-div-login">
+        <div class="col-6 top-div-left">
+           <h3>Choose Movie</h3>
+        </div>
+        <div class="col-6 top-div-right">
+            <div>
+                <img height="150" width="150" src="~/images/logo.png" />
+            </div>
+            <div>
+                <p style="font-size: 16px; font-style:italic">Your Movie shelf</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger justify-content-center" asp-validation-summary="All"></div>
+    <form asp-action="AddMovieFile" asp-controller="Movies" method="post" enctype="multipart/form-data" class="justify-content-center" style="padding:10px">
+        <div class=" col-12 form-group input-div">
+            <input type="file" class="form-control col-10 input-style" name="postedFile" style="border-radius:20px" />
+        </div>
+        <div class="btn-div col-12">
+            <button class="col-8 btn btn-danger btn-signin" type="submit">Add Movie</button>
+        </div>
+    </form>
+</div>
+

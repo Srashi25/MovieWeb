@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Review>
+
+@{
+    ViewData["Title"] = "ReviewsList";
+}
+
+<div class="row justify-content-center">
+
+    <div class="col-9 ">
+        <h3 class="h3 text-center" style="margin-top:20px">
+            @if (TempData["MovieName"] != null)
+            {<span class="alert alert-danger" id="error">@TempData["MovieName"]</span>} Reviews
+        </h3>
+        @if (Model == null || Model.ToList().Count == 0)
+        {
+
+            @: <p class="lead text-center"> No Reviews Added</p>
+        }
+        else
+        {
+            @foreach (var review in Model)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title" style="float:right">
+                            Movie Rating:
+                            @if (Model.ToList().Count > 0)
+                            {
+                                @review.MovieRating
+                            }
+                            else
+                            {
+                                @: Be the first to add Rating!
+                            }
+                        </h6>
+                        <h5 class="card-title">@review.Title</h5>
+                        <small style="float:right" class="card-title">by @review.UserEmail</small>
+                        <p class="card-text">
+                            @review.ReviewDescription
+                        </p>
+
+                    </div>
+                </div>
+                <hr>
+            }
+        }
+    </div>
+</div>
+<div style="display:flex; justify-content:center">
+    <a asp-action="Index" asp-controller="Movies" class="btn btn-outline-danger my-2">Back to movies</a>
+</div>

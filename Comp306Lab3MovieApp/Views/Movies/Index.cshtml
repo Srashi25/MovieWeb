@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Movie>
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1>Welcome to MovieWeb!</h1>
+            <p class="lead text-muted">The world's most thorough movie database.  Upload and share your favourite movies!</p>
+            <p>
+                <a asp-controller="Movies" asp-action="Create" class="btn btn-danger my-2">Add new movie</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-danger my-2">Log out</a>
+            </p>
+        </div>
+    </section>
+    <div class="col-md-6 text-center justify-contents-center" id="alert" style="display:flex;align-self:center;justify-content:center; height:60px;border-radius:5px">
+        @if (TempData["MovieUploaded"] != null)
+        {<div class=" col-md-12 alert-success " id="msg">@TempData["MovieUploaded"]</div>}
+        @if (TempData["Updated"] != null)
+        {<div class=" col-md-12 alert-success " id="msg">@TempData["Updated"]</div>}
+        @if (TempData["NoFile"] != null)
+        {<div class=" col-md-12 alert-danger " id="msg">@TempData["NoFile"]</div>}
+        @if (TempData["Created"] != null)
+        {<div class=" col-md-12 alert-success " id="msg">@TempData["Created"]</div>}
+        @if (TempData["ReviewAdded"] != null)
+        {<div class=" col-md-12 alert-success " id="msg">@TempData["ReviewAdded"]</div>}
+    </div>
+
+    <div class="album py-5 bg-light">
+
+        <div class="container">
+
+            <div class="row">
+                @foreach (var m in Model)
+                {
+
+                    <div class="col-md-4">
+
+                        <div class="card mb-4 shadow-sm">
+                            <img class="card-img-top" src="@m.ImageUrl" alt="@m.MovieName" style="max-width:350px;max-height:200px;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @if (m.MovieName == null)
+                                    {
+                                        @: No Name Added
+                                    }
+                                    else
+                                    {
+                                        @m.MovieName
+                                    }
+
+                                </h5>
+                                <div style="display: flex; flex-direction: row; justify-content:space-between">
+                                    <small class="text-muted">
+                                        @if (m.Rating == 0)
+                                        {
+                                            @:  No Rating Added
+                                        }
+                                        else
+                                        {
+                                            @m.Rating.ToString("0/5")
+                                        }
+
+                                    </small>
+                                    <small class="text-muted">Release Date: @m.ReleaseDate.Year</small>
+                                    <small class="text-muted" style="float:right">@m.Genre </small>
+                                </div>
+                                <span class="card-text">
+                                    <p class="card-text">
+                                        @if (m.Description == null)
+                                        {
+                                            @: No Descriptions Available
+                                        }
+                                        else if (m.Description.Length < 60)
+                                        {
+                                            @m.Description
+                                        }
+
+                                        else
+                                        {
+                                            @m.Substring(m.Description)
+                                        }
+                                    </p>
+                                </span>
+                                <br />
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <form asp-action="Delete" asp-controller="Movies" method="post" asp-route-id="@m.MovieId">
+                                        <div class="btn-group">
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-outline-secondary" asp-controller="Movies" asp-action="Details" asp-route-id="@m.MovieId">View</a>
+                                                <a class="btn btn-sm btn-outline-primary" asp-controller="Movies" asp-action="Edit" asp-route-id="@m.MovieId">Edit</a>
+                                                <a class="btn btn-sm btn-outline-warning" asp-controller="Movies" asp-action="AddMovieFile" asp-route-id="@m.MovieId">Upload</a>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="MovieId" value="@m.MovieId" />
+                                        <button type="submit" style="float:right;margin-left:100px;" class="btn btn-group btn-outline-danger  btn-sm" data-target="#deleteConfirm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                                @*<div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteConfirmLabel">Delete Confirmation</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                   Are you sure you want to delete @m.MovieName?
+                                                </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</main>
+<script>
+ setTimeout(function () {
+        $('#alert').fadeOut('slow');
+    }, 3000);
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

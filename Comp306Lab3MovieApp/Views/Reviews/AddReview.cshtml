@@ -1,0 +1,59 @@
+﻿@model MovieReview
+
+@{ ViewData["Title"] = "Movie Web | Add Review";
+    Layout = "_Layout"; }
+
+<h1 class="text-center">Add Review</h1>
+
+<h4 class="text-center">Review</h4>
+
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h2>
+            @if (TempData["movieName"] != null)
+            {@TempData["movieName"]}
+        </h2>
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container col-md-6">
+        <form asp-controller="Reviews" asp-action="AddReview" method="post">
+            <input type="hidden" asp-for="@Model.MovieId" />
+            <input type="hidden" asp-for="@Model.Review.ReviewID" />
+            <br />
+            <h3>Write a review</h3>
+
+            <div class="form-group">
+                <label asp-for="@Model.Review.MovieRating">Rating</label>
+                    <div class="form-group">
+                        1
+                        @Html.RadioButtonFor(model => model.Review.MovieRating, 1)
+                        2
+                        @Html.RadioButtonFor(model => model.Review.MovieRating, 2)
+                        3
+                        @Html.RadioButtonFor(model => model.Review.MovieRating, 3)
+                        4
+                        @Html.RadioButtonFor(model => model.Review.MovieRating, 4)
+                        5
+                        @Html.RadioButtonFor(model => model.Review.MovieRating, 5)
+                    </div>
+                    <span asp-validation-for="@Model.Review.MovieRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Review.Title">Title</label>
+                <input type="text" class="form-control" asp-for="@Model.Review.Title" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Review.ReviewDescription">Review Description</label>
+                <textarea type="text" class="form-control" asp-for="@Model.Review.ReviewDescription" rows="5"></textarea>
+            </div>
+            <br />
+            <div class="text-center">
+                <a asp-action="Index" asp-controller="Movies"  class="btn btn-outline-danger my-2">Back to movies</a>
+                <button type="submit" class="btn btn-danger my-2">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

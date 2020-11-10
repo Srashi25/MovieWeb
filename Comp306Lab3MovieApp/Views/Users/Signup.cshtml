@@ -1,0 +1,43 @@
+﻿
+
+@model User
+@{
+    ViewBag.Title = "MovieWeb |Sign Up";
+    ViewBag.UserPage = "active";
+    Layout = "_MovieLayout";
+}
+
+<div class="col-5 container-style center">
+
+    <div class="col-12  top-div-login">
+        <div class="col-6 top-div-left">
+            <a class="txt-signin" asp-controller="Users" asp-action="Signin" role="button">Sign in</a>
+            <a class="txt-signup" asp-controller="Users" asp-action="Signup" role="button">Sign up</a>
+        </div>
+        <div class="col-6 top-div-right">
+            <div>
+                <img height="150" width="150" src="~/images/logo.png" />
+            </div>
+            <div>
+                <p style="font-size: 16px; font-style:italic">Your Movie shelf</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger justify-content-center" asp-validation-summary="All"></div>
+    <form asp-action="Signup" asp-controller="Users" method="post" class="justify-content-center" style="padding:10px">
+        <div class=" col-12 form-group input-div">
+            <input asp-for="Email" class="form-control col-10 input-style" placeholder="e.g. example@email.com" style="border-radius:20px" required/>
+        </div>
+        <div class="col-12 form-group input-div">
+            <input asp-for="Password" class="form-control col-10 input-style" placeholder="********" required/>
+        </div>
+        <div class="col-12 form-group input-div">
+            <input asp-for="ConfirmPassword" class="form-control col-10 input-style" placeholder="********" required/>
+        </div>
+        <div class="btn-div col-12">
+            <button class="col-8 btn btn-danger btn-signin" type="submit">Sign Up</button>
+        </div>
+    </form>
+</div>
+
+
